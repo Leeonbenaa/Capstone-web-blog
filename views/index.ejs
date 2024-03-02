@@ -1,0 +1,90 @@
+
+<%- include("partials/header.ejs") %>
+
+<div class="hero">
+	<div class="hero-inner">
+			<div class="hero-title">
+				<h1 class="text-light title font-2">WEB BLOG</h1>
+				<p class="text-capitalize text-light">Search, enjoy and enter blogs.</p>
+			</div>
+			<a class="sd">Click to view or enter a blog</a>
+	</div>
+</div>
+
+<main class="container">
+    
+    <form action="/" method="POST">
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Title</label>
+            <input type="text" class="form-control" id="blogTitle" name="title" required placeholder="Title">
+          </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Content</label>
+        <textarea class="form-control" id="blogContent" name="content" rows="4" required></textarea>
+      </div>
+      
+      <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-dark">Submit</button>
+        </div>
+      </div>
+      </form>
+
+     
+   
+    
+    <% if(blogPosts.length > 0) { %>
+        <h2 class="display-3">Recent Blog Posts:</h2>
+        <ul class="list-group list-group-flush">
+            <% blogPosts.forEach(function(post) { %>
+                <li class="list-group-item list-group-item-info">
+                    <h3 class="list-group-item-heading"><%= post.title %></h3>
+                    <p class="list-group-item-text"><%= post.content %></p>
+                    <form action="/delete/<%= post.id %>" method="POST">
+
+                         
+                        <button class="delete-btn" type="submit">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                    </form>
+                   
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p class="lead">No posts yet.</p>
+    <% } %>
+  
+</main>
+    <%- include("partials/footer.ejs") %>
+    <script>
+        $(document).ready(function() {
+            // Function to add class when scrolling down or clicking link
+            function addScrolledClass() {
+                $('.hero, .content').addClass('scrolled');
+            }
+        
+            // Function to remove class when scrolling up
+            function removeScrolledClass() {
+                $('.hero, .content').removeClass('scrolled');
+            }
+        
+            // Click event for link
+            $('.sd').click(function() {
+                addScrolledClass();
+            });
+        
+            // Scroll event
+            $(window).on('scroll', function() {
+                if ($(window).scrollTop() > 0) {
+                    addScrolledClass();
+                } else {
+                    removeScrolledClass();
+                }
+            });
+        });
+        </script>
+        
+</body>
+
+
